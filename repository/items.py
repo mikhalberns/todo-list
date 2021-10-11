@@ -1,7 +1,7 @@
 from db_utils.database import db
 from db_utils.models import Item
 from bson.objectid import ObjectId
-from typing import Optional, List
+from typing import Optional
 
 
 def create_item(item: Item):
