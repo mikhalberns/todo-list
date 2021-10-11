@@ -1,23 +1,12 @@
 from typing import Optional, List
 
 from fastapi import FastAPI
-from pydantic import BaseModel
-from pymongo import MongoClient
-import datetime
 from bson.objectid import ObjectId
 
+from db_utils.database import db
+from db_utils.models import Item
+
 app = FastAPI()
-
-client = MongoClient(port=27018)
-db = client.todolist
-
-
-class Item(BaseModel):
-    user: str
-    task: str
-    created_date: datetime.datetime = datetime.datetime.today()
-    due_date: datetime.datetime = None
-    tags: Optional[List[str]]
 
 
 @app.post("/items")
