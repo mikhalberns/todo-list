@@ -27,7 +27,7 @@ def read_items(user: Optional[str] = None, tags: Optional[str] = None) -> List[s
 
 
 @router.put("/{item_task}", status_code=status.HTTP_202_ACCEPTED)
-def update_item(item_task: str, item: Item)-> Dict[str, str]:
+def update_item(item_task: str, item: Item) -> Dict[str, str]:
     return items.update_item(item_task, item)
 
 
