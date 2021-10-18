@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from routers import items
 
+from routers import items
 
 app = FastAPI()
 

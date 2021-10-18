@@ -1,20 +1,22 @@
+from typing import Optional, List, Dict
+
+from bson.objectid import ObjectId
+
 from db_utils.database import db
 from db_utils.models import Item
-from bson.objectid import ObjectId
-from typing import Optional, List
 
 
-def create_item(item: Item):
+def create_item(item: Item) -> Dict[str, str]:
     new_item_id = str(db.items.insert_one(dict(item)).inserted_id)
     item = db.items.find_one({"_id": ObjectId(new_item_id)})
     item["_id"] = str(item["_id"])
     return item
 
 
-def read_item(item_task: str):
+def read_item(item_task: str) -> Dict[str, str]:
     item = db.items.find_one({"task": item_task})
     item["_id"] = str(item["_id"])
-    return dict(item)
+    return item
 
 
 def read_items(user: Optional[str] = None, tags: Optional[str] = None) -> List[str]:
@@ -31,7 +33,7 @@ def read_items(user: Optional[str] = None, tags: Optional[str] = None) -> List[s
     return items
 
 
-def update_item(item_task: str, item: Item):
+def update_item(item_task: str, item: Item) -> Dict[str, str]:
     item_filter = {"task": item_task}
     item = {k: v for k, v in dict(item).items() if v is not None}
     updated_item = {"$set": item}
@@ -39,7 +41,7 @@ def update_item(item_task: str, item: Item):
     return item
 
 
-def delete_item(item_task: str):
+def delete_item(item_task: str) -> str:
     deleted_item = {"task": item_task}
     db.items.delete_one(deleted_item)
     return "deleted"
