@@ -11,10 +11,10 @@ def create_item(item: Item):
     return item
 
 
-def read_item(item_id: str):
-    item = db.items.find_one({"_id": ObjectId(item_id)})
+def read_item(item_task: str):
+    item = db.items.find_one({"task": item_task})
     item["_id"] = str(item["_id"])
-    return item
+    return dict(item)
 
 
 def read_items(user: Optional[str] = None, tags: Optional[str] = None) -> List[str]:
@@ -31,15 +31,15 @@ def read_items(user: Optional[str] = None, tags: Optional[str] = None) -> List[s
     return items
 
 
-def update_item(item_id: str, item: Item):
-    user_filter = {"_id": ObjectId(item_id)}
+def update_item(item_task: str, item: Item):
+    item_filter = {"task": item_task}
     item = {k: v for k, v in dict(item).items() if v is not None}
     updated_item = {"$set": item}
-    db.items.update_one(user_filter, updated_item)
+    db.items.update_one(item_filter, updated_item)
     return item
 
 
-def delete_item(item_id: str):
-    deleted_item = {"_id": ObjectId(item_id)}
+def delete_item(item_task: str):
+    deleted_item = {"task": item_task}
     db.items.delete_one(deleted_item)
     return "deleted"
