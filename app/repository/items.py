@@ -3,8 +3,8 @@ from typing import Optional, List, Dict
 from bson.objectid import ObjectId
 from fastapi import HTTPException, status
 
-from db_utils.database import db
-from db_utils.models import Item
+from app.db_utils.database import db
+from app.db_utils.models import Item
 
 
 def create_item(item: Item) -> Dict[str, str]:

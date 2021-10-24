@@ -2,8 +2,8 @@ from typing import Optional, Dict, List
 
 from fastapi import APIRouter, status
 
-from db_utils.models import Item
-from repository import items
+from app.db_utils.models import Item
+from app.repository import items
 
 router = APIRouter(
     tags=["items"],
