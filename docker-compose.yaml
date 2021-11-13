@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  mongodb:
+    image : "mongo:4.2.16"
+    profiles: ["full", "dev"]
+    container_name: "mongo-db-latest"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass12345
+    ports:
+      - "27018:27017"
+    restart: unless-stopped
+  app:
+    build: .
+    profiles: ["full"]
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass12345
+      - MONGO_HOST_NAME=host.docker.internal
+      - MONGO_PORT=27018
+    ports:
+      - "8000:80"
+    depends_on: [mongodb]
